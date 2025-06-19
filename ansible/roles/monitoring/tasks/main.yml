@@ -1,0 +1,36 @@
+- name: Install Docker
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Install Docker Compose
+  apt:
+    name: docker-compose
+    state: present
+
+- name: Copy docker-compose.yml
+  copy:
+    src: ../../../../docker-compose.yml
+    dest: /opt/monitoring/docker-compose.yml
+
+- name: Copy prometheus.yml
+  copy:
+    src: ../../../../prometheus.yml
+    dest: /opt/monitoring/prometheus.yml
+
+- name: Copy logstash.conf
+  copy:
+    src: ../../../../logstash.conf
+    dest: /opt/monitoring/logstash.conf
+
+- name: Create log directory
+  file:
+    path: /var/log/test
+    state: directory
+    mode: '0755'
+
+- name: Start monitoring stack
+  shell: |
+    cd /opt/monitoring
+    docker-compose up -d

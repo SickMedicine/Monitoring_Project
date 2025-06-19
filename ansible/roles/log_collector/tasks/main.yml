@@ -1,0 +1,5 @@
+- name: Ensure /var/log/test exists
+  file:
+    path: /var/log/test
+    state: directory
+    mode: '0777'
