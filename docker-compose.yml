@@ -6,7 +6,9 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
-
+    networks:
+      - monitoring
+    
   node-exporter:
     image: prom/node-exporter
     ports:

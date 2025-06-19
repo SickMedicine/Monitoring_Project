@@ -9,20 +9,26 @@
     name: docker-compose
     state: present
 
+- name: Create monitoring directory
+  file:
+    path: /home/test/monitoring
+    state: directory
+    mode: '0755'
+
 - name: Copy docker-compose.yml
   copy:
     src: ../../../../docker-compose.yml
-    dest: /opt/monitoring/docker-compose.yml
+    dest: /home/test/monitoringdocker-compose.yml
 
 - name: Copy prometheus.yml
   copy:
     src: ../../../../prometheus.yml
-    dest: /opt/monitoring/prometheus.yml
+    dest: /home/test/monitoring/prometheus.yml
 
 - name: Copy logstash.conf
   copy:
     src: ../../../../logstash.conf
-    dest: /opt/monitoring/logstash.conf
+    dest: /home/test/monitoring/logstash.conf
 
 - name: Create log directory
   file:
@@ -32,5 +38,5 @@
 
 - name: Start monitoring stack
   shell: |
-    cd /opt/monitoring
+    cd /home/test/monitoring
     docker-compose up -d
